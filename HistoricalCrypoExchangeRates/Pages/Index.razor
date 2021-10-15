@@ -1,0 +1,30 @@
+﻿@page "/"
+
+
+
+<MudDatePicker Label="Pick a date" @bind-Date="ExchangeRateDate" />
+<br/>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GetHistoricData">Check History</MudButton>
+<br/>
+
+@if (RatesResponse is not null)
+{
+    @if (RatesResponse.LoadedFromCache)
+    {
+        <MudAlert>Loaded from cache</MudAlert>
+    }
+    else
+    {
+        <MudAlert>Loaded from API</MudAlert>
+    }
+    <MudTable Items="@RatesResponse.Rates">
+        <HeaderContent>
+            <MudTh>Crypto</MudTh>
+            <MudTh>Rate</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Crypto">@context.Key</MudTd>
+            <MudTd DataLabel="Rate">@context.Value</MudTd>
+        </RowTemplate>
+    </MudTable>
+}
